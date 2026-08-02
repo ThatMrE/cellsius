@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bacterial Transformation &mdash; Cellsius Open Protocols</title>
+  <meta name="description" content="Get new DNA into living E. coli using the classic heat-shock method — the gateway skill of genetic engineering. Beginner protocol with a plasmid and selective plates.">
+  <meta name="theme-color" content="#00e676">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧫</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html#top" class="logo"><span class="mark">🧫</span> Cell<b>sius</b></a>
+      <div class="nav-links">
+        <a href="../index.html#skilltree">Skill Tree</a>
+        <a href="../index.html#shop">Shop</a>
+        <a href="../learn.html">Learn</a>
+        <a href="../about.html" class="cta">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page">
+    <div class="wrap">
+      <div class="crumbs"><a href="../learn.html">Learn</a><span>/</span><a href="../learn.html#protocols">Tier II · Genetic Engineering</a><span>/</span> Bacterial transformation</div>
+      <h1>Bacterial transformation</h1>
+      <p class="lead">This is the moment biology becomes engineering: you hand a living cell a new piece of DNA, and it starts following those instructions. The heat-shock method is simple, reliable, and the basis of nearly all molecular biology.</p>
+      <div class="meta-row">
+        <span class="chip diff-beginner">Difficulty <b>Beginner</b></span>
+        <span class="chip">Hands-on <b>~2 hrs</b> (+ overnight)</span>
+        <span class="chip">Tier <b>II · Genetic Engineering</b></span>
+        <span class="chip">Prereq <b>Sterile technique</b></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="protocol prose">
+
+      <div class="block">
+        <p>A <strong>plasmid</strong> is a small loop of DNA that bacteria can carry and read. If that plasmid contains, say, a gene for a green fluorescent protein and a gene for antibiotic resistance, a cell that takes it up will both <em>glow</em> and <em>survive</em> on a plate containing that antibiotic. That antibiotic is your <strong>selection</strong>: only successfully transformed cells grow.</p>
+        <p>"Heat shock" briefly makes the cell membrane permeable so DNA can slip inside. We use <strong>competent</strong> cells &mdash; E.&nbsp;coli specially prepared to make this easy.</p>
+      </div>
+
+      <div class="callout safe block">
+        <span class="ic">⚠︎</span>
+        <div><b>Stay BSL-1 and clean up.</b> Use only the non-pathogenic lab strain supplied (e.g. E.&nbsp;coli K-12). Keep good sterile technique, don't eat/drink at the bench, and decontaminate everything that touched culture in 10% bleach for 20+ minutes (or autoclave) before disposal. Handle antibiotics as you would any lab chemical.</div>
+      </div>
+
+      <div class="block">
+        <h2>What you'll need</h2>
+        <ul class="mats">
+          <li><span class="b">•</span> Competent <em>E. coli</em> (K-12), kept on ice</li>
+          <li><span class="b">•</span> Plasmid DNA (e.g. a GFP + resistance plasmid)</li>
+          <li><span class="b">•</span> LB agar plates <em>with</em> the matching antibiotic</li>
+          <li><span class="b">•</span> One plain LB plate (no antibiotic) as a control</li>
+          <li><span class="b">•</span> Liquid LB (or SOC) recovery medium</li>
+          <li><span class="b">•</span> A 42&nbsp;°C water bath or dry-bath incubator</li>
+          <li><span class="b">•</span> Ice / ice bath, a timer</li>
+          <li><span class="b">•</span> Sterile loops or a spreader; micropipette if available</li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <h2>The protocol</h2>
+        <ol class="steps">
+          <li><h4>Chill the cells</h4><p>Thaw competent cells on ice and keep them there. Cold is what keeps the membrane ready to respond to the heat shock &mdash; don't let them warm up.</p></li>
+          <li><h4>Add the DNA</h4><p>Gently add a few microlitres of plasmid to the cells and swirl (don't vortex). Return to ice for <strong>20–30 minutes</strong> so DNA settles against the membrane.</p></li>
+          <li><h4>Heat shock</h4><p>Move the tube to <strong>42&nbsp;°C for exactly 45 seconds</strong>, then immediately back onto ice for 2 minutes. This rapid warm-then-cold is what drives DNA inside.</p></li>
+          <li><h4>Recover</h4><p>Add ~250&nbsp;µL of LB/SOC and incubate at 37&nbsp;°C for ~1 hour. The cells repair and begin expressing the new resistance gene so they can survive selection.</p></li>
+          <li><h4>Plate onto selection</h4><p>Spread the culture onto an antibiotic LB plate. Also spread a little onto the plain LB control (proves your cells are alive) and, ideally, streak untransformed cells onto antibiotic (proves selection works &mdash; nothing should grow).</p></li>
+          <li><h4>Incubate overnight</h4><p>Invert and incubate at 37&nbsp;°C for 16–24 hours. Transformed colonies appear on the antibiotic plate &mdash; and if you used a fluorescent plasmid, they'll glow under the right light.</p></li>
+        </ol>
+      </div>
+
+      <div class="callout tip block">
+        <span class="ic">✓</span>
+        <div><b>Read your controls.</b> Colonies on the antibiotic plate + growth on plain LB + nothing on the untransformed-antibiotic plate = a clean, trustworthy result. Controls are what turn "it grew" into "it worked."</div>
+      </div>
+
+      <div class="block">
+        <h2>Troubleshooting</h2>
+        <table class="tbl">
+          <tr><th>You see…</th><th>Likely cause</th><th>Fix</th></tr>
+          <tr><td>No colonies at all</td><td><b>Heat shock off, cells warmed, or DNA degraded</b></td><td>Keep cells icy until shock; time 42&nbsp;°C precisely; use fresh plasmid.</td></tr>
+          <tr><td>Colonies on the <em>no-DNA</em> antibiotic control too</td><td><b>Antibiotic inactive or plates too old</b></td><td>Make fresh selective plates; store antibiotic cold and use within its shelf life.</td></tr>
+          <tr><td>Growth on plain LB but none on antibiotic</td><td><b>Transformation failed but cells are fine</b></td><td>Recheck DNA amount and heat-shock timing; extend recovery time.</td></tr>
+          <tr><td>A confluent lawn, not colonies</td><td><b>Too many cells plated / contamination</b></td><td>Plate less; verify sterile technique and that the strain is correct.</td></tr>
+        </table>
+      </div>
+
+      <div class="block">
+        <h2>What's actually happening</h2>
+        <p>Cold, calcium-treated (competent) cells have membranes primed to take up DNA. The sudden 42&nbsp;°C pulse creates a thermal imbalance that opens transient pores; DNA that was hugging the membrane slips through. During recovery, the cell transcribes and translates the plasmid's resistance gene, building the protein it needs to survive the antibiotic. Selection then does the sorting for you: only cells carrying your plasmid live to form colonies.</p>
+      </div>
+
+      <div class="kit-cta block">
+        <div class="kc-art">🧬</div>
+        <div class="kc-body">
+          <h3>Do this experiment at home</h3>
+          <p>The Genetic Engineering Home Lab includes competent cells, a fluorescent plasmid, selective plates, and everything above &mdash; your first real genetic modification.</p>
+        </div>
+        <a class="btn btn-primary" href="../index.html#shop">Get the kit →</a>
+      </div>
+
+      <div class="pager">
+        <a href="pour-and-streak-plates.html" class="prev"><span class="lbl">← Previous</span><b>Pour &amp; streak plates</b></a>
+        <a href="crispr-bacteria.html" class="next"><span class="lbl">Next →</span><b>CRISPR a bacterial gene</b></a>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-bottom">
+        <span>© 2026 Cellsius &middot; <a href="../index.html#top">Home</a> &middot; <a href="../learn.html">Learn</a> &middot; <a href="../index.html#safety">Safety</a></span>
+        <span>Educational protocol only. Not for clinical, human, or animal use.</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

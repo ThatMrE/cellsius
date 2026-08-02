@@ -1,2 +1,8 @@
 [build]
   publish = "."
+
+# Serverless functions (Stripe Checkout lives in netlify/functions/create-checkout.js).
+# Netlify runs `npm install` automatically when a package.json is present.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

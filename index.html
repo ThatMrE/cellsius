@@ -304,10 +304,10 @@
       <p>Every protocol we publish is free and open. Start with the fundamentals, then pick up a kit when you're ready to get your hands wet.</p>
     </div>
     <div class="learn-grid">
-      <div class="learn-card"><div class="ic">🧭</div><div><h3>Biology 101 for beginners</h3><p>A plain-language crash course in DNA, cells, and genetic engineering &mdash; what a gene is and what CRISPR actually does.</p><a class="link" href="#" onclick="soon(event)">Read the guide →</a></div></div>
-      <div class="learn-card"><div class="ic">🧾</div><div><h3>Open protocols library</h3><p>Step-by-step protocols mapped to every skill in the tree &mdash; free to read before you buy, and yours to keep.</p><a class="link" href="#" onclick="soon(event)">Browse protocols →</a></div></div>
-      <div class="learn-card"><div class="ic">🏫</div><div><h3>Classroom &amp; educator packs</h3><p>Discounted multi-student bundles, lesson plans mapped to NGSS standards, and teacher support for grades 9+.</p><a class="link" href="#" onclick="soon(event)">For educators →</a></div></div>
-      <div class="learn-card"><div class="ic">💬</div><div><h3>Community &amp; support</h3><p>Join thousands of curious builders. Ask questions, share results, and troubleshoot with people who've done it.</p><a class="link" href="#" onclick="soon(event)">Join the community →</a></div></div>
+      <div class="learn-card"><div class="ic">🧭</div><div><h3>Biology 101 for beginners</h3><p>A plain-language crash course in DNA, cells, and genetic engineering &mdash; what a gene is and what CRISPR actually does.</p><a class="link" href="learn.html">Read the guide →</a></div></div>
+      <div class="learn-card"><div class="ic">🧾</div><div><h3>Open protocols library</h3><p>Step-by-step protocols mapped to every skill in the tree &mdash; free to read before you buy, and yours to keep.</p><a class="link" href="learn.html#protocols">Browse protocols →</a></div></div>
+      <div class="learn-card"><div class="ic">🏫</div><div><h3>Classroom &amp; educator packs</h3><p>Discounted multi-student bundles, lesson plans mapped to NGSS standards, and teacher support for grades 9+.</p><a class="link" href="learn.html#educators">For educators →</a></div></div>
+      <div class="learn-card"><div class="ic">💬</div><div><h3>Community &amp; support</h3><p>Join thousands of curious builders. Ask questions, share results, and troubleshoot with people who've done it.</p><a class="link" href="learn.html#community">Join the community →</a></div></div>
     </div>
   </section>
 
@@ -357,7 +357,7 @@
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand"><a href="#top" class="logo"><span class="mark">🧫</span> Cell<b>sius</b></a><p>Living systems for everyone. Open source biology, open source future.</p></div>
-        <div class="foot-col"><h4>Explore</h4><a href="#skilltree">Skill tree</a><a href="#shop">Shop</a><a href="#store">Our kits</a><a href="#learn">Learn</a></div>
+        <div class="foot-col"><h4>Explore</h4><a href="#skilltree">Skill tree</a><a href="#shop">Shop</a><a href="#store">Our kits</a><a href="learn.html">Learn &amp; protocols</a></div>
         <div class="foot-col"><h4>Company</h4><a href="about.html">About &amp; mission</a><a href="about.html#affiliate">Affiliate disclosure</a><a href="#safety">Safety &amp; ethics</a><a href="#" onclick="soon(event)">Contact</a></div>
         <div class="foot-col"><h4>Legal</h4><a href="#" onclick="soon(event)">Terms</a><a href="#" onclick="soon(event)">Privacy</a><a href="#faq">FAQ</a></div>
       </div>
@@ -515,18 +515,29 @@
           <p>${p.desc}</p>
           <div class="sc-foot">
             <div class="sc-price">${fmt(p.price)}<small>${p.unit||''}</small></div>
-            <button class="pay" onclick="pay('${p.id}')">Buy now →</button>
+            <button class="pay" onclick="pay('${p.id}', this)">Buy now →</button>
           </div>
         </article>`).join('');
     }
-    function pay(id) {
+    async function pay(id, btn) {
+      const p = byId(id);
+      if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Loading…'; }
+      const reset = () => { if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || 'Buy now →'; } };
+      // 1) Real Stripe Checkout via Netlify function (goes live once STRIPE_SECRET_KEY is set)
+      try {
+        const r = await fetch('/.netlify/functions/create-checkout', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id })
+        });
+        if (r.ok) { const data = await r.json(); if (data.url) { window.location.href = data.url; return; } }
+      } catch (e) { /* function not deployed yet — fall through */ }
+      // 2) Stripe Payment Link fallback (no backend)
       const link = CONFIG.stripeLinks[id];
       if (link) { window.location.href = link; return; }
-      // demo fallback → email order
-      const p = byId(id);
+      // 3) Demo fallback → email order
+      reset();
       const body = `Hi Cellsius, I'd like to buy: ${p.name} (${fmt(p.price)}${p.unit||''}).%0A%0AName:%0AShipping address:`;
       window.location.href = `mailto:${CONFIG.orderEmail}?subject=${encodeURIComponent('Cellsius order — ' + p.name)}&body=${body}`;
-      showToast('Demo mode — add a Stripe link to take card payments');
+      showToast('Demo mode — add your Stripe key to take card payments');
     }
 
     /* ═══ RENDER: SKILL TREE ═══ */
@@ -553,6 +564,12 @@
     function track(id){ /* hook for analytics/affiliate click tracking */ }
 
     renderTree(); renderProducts(); renderStore();
+
+    // Stripe Checkout success return (?paid=1)
+    if (new URLSearchParams(location.search).get('paid') === '1') {
+      setTimeout(() => showToast('Payment received — thank you! 🧬 Check your email for a receipt.'), 400);
+      history.replaceState(null, '', location.pathname + location.hash);
+    }
   </script>
 </body>
 </html>
