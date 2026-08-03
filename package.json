@@ -1,0 +1,9 @@
+{
+  "name": "cellsius",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cellsius — educational biotech shop, skill tree and open protocols.",
+  "dependencies": {
+    "stripe": "^16.12.0"
+  }
+}

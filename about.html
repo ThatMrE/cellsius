@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About &amp; Mission &mdash; Cellsius</title>
+  <meta name="description" content="Why Cellsius exists: to make real molecular biology accessible, safe, and open to everyone. Our mission, values, how our curated shop works, and our affiliate disclosure.">
+  <meta name="theme-color" content="#00e676">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧫</text></svg>">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About & Mission — Cellsius">
+  <meta property="og:description" content="Making real molecular biology accessible, safe, and open to everyone.">
+  <meta property="og:url" content="https://cellsius.org/about.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green:#00e676; --green-glow:rgba(0,230,118,0.35); --teal:#00cfa7; --amber:#ffc53d;
+      --dark:#001410; --dark2:#00201a; --dark3:#012c23; --panel:rgba(0,230,118,0.035);
+      --text:#eafff4; --muted:rgba(234,255,244,0.58); --muted2:rgba(234,255,244,0.38);
+      --border:rgba(0,230,118,0.16); --border-hi:rgba(0,230,118,0.4); --radius:16px; --maxw:1000px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{background:var(--dark);color:var(--text);font-family:'Inter',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.65}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit;cursor:pointer;border:none}
+    body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(600px 600px at 80% -5%,rgba(0,230,118,0.10),transparent 70%),radial-gradient(500px 500px at 5% 15%,rgba(0,207,167,0.08),transparent 70%)}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;position:relative;z-index:1}
+
+    nav{position:sticky;top:0;z-index:100;background:rgba(0,20,16,0.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:1180px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:28px}
+    .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.35rem;letter-spacing:-0.02em}
+    .logo .mark{font-size:1.5rem}.logo b{color:var(--green)}
+    .nav-links{display:flex;gap:22px;margin-left:auto;align-items:center}
+    .nav-links a{color:var(--muted);font-size:0.92rem;font-weight:500;transition:color .2s}
+    .nav-links a:hover{color:var(--green)}
+    .nav-links a.cta{color:var(--green);border:1px solid var(--border-hi);border-radius:999px;padding:8px 16px;font-weight:600}
+    .nav-links a.cta:hover{background:var(--green);color:#002014}
+
+    header.hero{padding:74px 0 46px;text-align:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);border:1px solid var(--border);padding:6px 14px;border-radius:999px;background:var(--panel);margin-bottom:24px}
+    header.hero h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(2.3rem,5.5vw,3.8rem);line-height:1.05;letter-spacing:-0.03em;max-width:16ch;margin:0 auto}
+    header.hero h1 em{font-style:normal;color:var(--green)}
+    header.hero .lead{font-size:clamp(1.05rem,2vw,1.28rem);color:var(--muted);max-width:60ch;margin:22px auto 0}
+
+    section{padding:40px 0;position:relative}
+    .kicker{font-family:'Space Mono',monospace;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal)}
+    h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-0.02em;margin:8px 0 16px}
+    .prose p{color:var(--muted);margin-bottom:16px;font-size:1.02rem}
+    .prose p strong{color:var(--text)}
+
+    .mission{background:linear-gradient(135deg,rgba(0,230,118,0.08),rgba(0,207,167,0.03));border:1px solid var(--border-hi);border-radius:var(--radius);padding:40px}
+    .mission h2{margin-top:0}
+    .mission .big{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.3rem,2.6vw,1.7rem);color:var(--text);line-height:1.4}
+    .mission .big b{color:var(--green)}
+
+    .values{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px}
+    .value{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:border-color .2s,transform .2s}
+    .value:hover{border-color:var(--border-hi);transform:translateY(-3px)}
+    .value .ic{font-size:1.7rem;margin-bottom:12px}
+    .value h3{font-family:'Space Grotesk',sans-serif;font-size:1.12rem;margin-bottom:6px}
+    .value p{color:var(--muted);font-size:0.92rem}
+
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:20px;counter-reset:step}
+    .step{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:26px 22px;position:relative}
+    .step::before{counter-increment:step;content:counter(step);font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--green);font-size:1.6rem;display:block;margin-bottom:10px}
+    .step h3{font-family:'Space Grotesk',sans-serif;font-size:1.08rem;margin-bottom:6px}
+    .step p{color:var(--muted);font-size:0.92rem}
+
+    .disclosure{background:rgba(255,197,61,0.06);border:1px solid rgba(255,197,61,0.25);border-radius:var(--radius);padding:28px}
+    .disclosure h2{margin-top:0}
+    .disclosure .prose p{font-size:0.98rem}
+    .disclosure .amber{color:var(--amber);font-weight:600}
+
+    .cta-band{text-align:center;background:linear-gradient(135deg,rgba(0,230,118,0.08),rgba(0,207,167,0.04));border:1px solid var(--border);border-radius:var(--radius);padding:48px 32px;margin-top:20px}
+    .cta-band h2{margin-top:0}
+    .cta-band p{color:var(--muted);margin:0 auto 24px;max-width:52ch}
+    .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:999px;font-weight:600;font-size:0.98rem;transition:all .2s;background:var(--green);color:#002014;box-shadow:0 8px 30px var(--green-glow)}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px var(--green-glow)}
+
+    footer{border-top:1px solid var(--border);padding:44px 0 40px;margin-top:30px}
+    .foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--muted2);font-size:0.84rem}
+    .foot-bottom a{color:var(--muted)}.foot-bottom a:hover{color:var(--green)}
+
+    @media (max-width:820px){.values,.steps{grid-template-columns:1fr}.mission{padding:28px}}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html#top" class="logo"><span class="mark">🧫</span> Cell<b>sius</b></a>
+      <div class="nav-links">
+        <a href="index.html#skilltree">Skill Tree</a>
+        <a href="index.html#shop">Shop</a>
+        <a href="index.html#store">Our Kits</a>
+        <a href="index.html#learn">Learn</a>
+        <a href="about.html" class="cta">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Our mission</span>
+      <h1>Biology belongs to <em>everyone.</em></h1>
+      <p class="lead">For most of history, doing real molecular biology meant a university, a grant, and a locked door. Cellsius exists to change that &mdash; safely, openly, and one skill at a time.</p>
+    </div>
+  </header>
+
+  <section class="wrap">
+    <div class="mission">
+      <div class="kicker">The mission</div>
+      <h2>What we're here to do</h2>
+      <p class="big">We make the tools and knowledge of modern biology <b>accessible to anyone curious enough to try</b> &mdash; the student, the teacher, the tinkerer, the community lab &mdash; while keeping it <b>safe</b> and keeping the science <b>open</b>.</p>
+    </div>
+  </section>
+
+  <section class="wrap prose">
+    <div class="kicker">Why we exist</div>
+    <h2>The story</h2>
+    <p>Cellsius started from a simple frustration: the most exciting science of our era &mdash; genetic engineering, CRISPR, synthetic biology &mdash; felt sealed off. The knowledge lived in journals, the reagents behind institutional accounts, and the encouragement almost nowhere. Meanwhile a generation of curious people had the internet, a kitchen table, and no idea where to start.</p>
+    <p>So we built two things. First, a <strong>skill tree</strong>: a clear, gamified path that turns "biology" from an intimidating wall into a series of unlockable, teachable steps. Second, a <strong>curated shop</strong> that removes the other barrier &mdash; knowing <em>what to buy</em>. We test and hand-pick kits from trusted makers, point you to the right lab staples, and make a couple of our own on-ramp products. No 10,000-SKU catalog. Just the right next thing.</p>
+    <p>We're deliberately not a faceless marketplace. Every product ties back to a skill, every skill ties back to a free protocol, and the whole thing is designed so a total beginner can go from their first petri dish to a real CRISPR edit &mdash; understanding <em>why</em> at every step.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="kicker">What we believe</div>
+    <h2>Our values</h2>
+    <div class="values">
+      <div class="value"><div class="ic">🔓</div><h3>Open by default</h3><p>Our protocols are free to read and yours to keep. Science advances fastest when knowledge isn't paywalled.</p></div>
+      <div class="value"><div class="ic">🛡️</div><h3>Safe, always</h3><p>Only non-pathogenic, BSL-1 organisms and education-grade materials. Never anything for clinical, human, or animal use.</p></div>
+      <div class="value"><div class="ic">🎓</div><h3>Understanding over recipes</h3><p>We explain the why, not just the steps. The goal is a scientist, not a follower of instructions.</p></div>
+      <div class="value"><div class="ic">🌍</div><h3>Access for all</h3><p>Classroom pricing, beginner-friendly kits, and a path that assumes nothing but curiosity.</p></div>
+      <div class="value"><div class="ic">🤝</div><h3>Honest recommendations</h3><p>We only list gear we'd use ourselves, and we're upfront about how we're funded.</p></div>
+      <div class="value"><div class="ic">🧬</div><h3>Wonder is the point</h3><p>The first time you watch cells glow, something changes. We're here for that moment.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="kicker">How it works</div>
+    <h2>Two ways to buy</h2>
+    <div class="steps">
+      <div class="step"><h3>Follow the skill tree</h3><p>Start at Foundations and work up. Each node tells you the skill and the exact kit or tool that teaches it.</p></div>
+      <div class="step"><h3>Shop curated picks</h3><p>Kits and gear from trusted makers like The&nbsp;ODIN and vetted lab staples. You buy on their site; we may earn a small commission.</p></div>
+      <div class="step"><h3>Or buy our own kits</h3><p>A few things we make ourselves &mdash; a starter bundle, a handbook, a membership &mdash; sold here with secure Stripe checkout.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap" id="affiliate">
+    <div class="disclosure prose">
+      <div class="kicker">Transparency</div>
+      <h2>Affiliate disclosure</h2>
+      <p>Cellsius keeps its guides and protocols free in part through <span class="amber">affiliate partnerships</span>. Some links in our shop and skill tree &mdash; including Amazon and independent makers &mdash; are affiliate links. If you buy through one, we may earn a small commission <strong>at no additional cost to you</strong>: you pay the vendor's normal price.</p>
+      <p>As an Amazon Associate, Cellsius earns from qualifying purchases. This never changes what we recommend. We list products because we think they're the best way to learn a skill &mdash; not because of commission. Prices shown on our site are indicative; the live, authoritative price is always on the vendor's own page.</p>
+      <p>Our own products (in <strong>"Our Kits"</strong>) are sold directly by Cellsius with card payments processed securely by Stripe &mdash; your card details never touch our servers.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="cta-band">
+      <h2>Ready to start?</h2>
+      <p>Open the skill tree and unlock your first branch of biology today.</p>
+      <a href="index.html#skilltree" class="btn">Explore the skill tree →</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot-bottom">
+        <span>© 2026 Cellsius &middot; <a href="index.html#top">Home</a> &middot; <a href="index.html#safety">Safety</a> &middot; <a href="index.html#faq">FAQ</a></span>
+        <span>Educational products only. Not for clinical, human, or animal use.</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

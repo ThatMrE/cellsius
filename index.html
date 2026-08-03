@@ -3,73 +3,573 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cellsius</title>
+  <title>Cellsius &mdash; DIY Biology Kits, Gear &amp; a Biotech Skill Tree</title>
+  <meta name="description" content="Cellsius is a curated shop and learning path for real molecular biology. Follow the biotech skill tree, then get the kits, equipment, and reagents that teach each skill. Open source biology for everyone.">
+  <meta name="theme-color" content="#00e676">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧫</text></svg>">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cellsius — DIY Biology Kits, Gear & a Biotech Skill Tree">
+  <meta property="og:description" content="A curated shop and learning path for real molecular biology. Follow the skill tree, then get the kits that teach each skill.">
+  <meta property="og:url" content="https://cellsius.org/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: linear-gradient(135deg, #001a10 0%, #003020 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      color: #fff;
-      overflow: hidden;
+    :root {
+      --green: #00e676; --green-dim: #00b85f; --green-glow: rgba(0,230,118,0.35);
+      --teal: #00cfa7; --amber: #ffc53d;
+      --dark: #001410; --dark2: #00201a; --dark3: #012c23;
+      --panel: rgba(0,230,118,0.035);
+      --text: #eafff4; --muted: rgba(234,255,244,0.58); --muted2: rgba(234,255,244,0.38);
+      --border: rgba(0,230,118,0.16); --border-hi: rgba(0,230,118,0.4);
+      --radius: 16px; --maxw: 1180px;
     }
-    .container {
-      text-align: center;
-      padding: 2rem;
-      max-width: 600px;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--dark); color: var(--text); font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    img, svg { max-width: 100%; display: block; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    body::before {
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(600px 600px at 80% -5%, rgba(0,230,118,0.10), transparent 70%),
+        radial-gradient(500px 500px at 5% 15%, rgba(0,207,167,0.08), transparent 70%),
+        radial-gradient(circle at 20% 80%, rgba(0,230,118,0.05), transparent 60%);
     }
-    .emoji {
-      font-size: 5rem;
-      display: block;
-      margin-bottom: 1.5rem;
-      animation: float 3s ease-in-out infinite;
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(0,20,16,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; gap: 28px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.35rem; letter-spacing: -0.02em; }
+    .logo .mark { font-size: 1.5rem; }
+    .logo b { color: var(--green); }
+    .nav-links { display: flex; gap: 22px; margin-left: auto; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: 0.92rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.cta:hover { color: var(--green); }
+    .nav-links a.cta { color: var(--green); border: 1px solid var(--border-hi); border-radius: 999px; padding: 8px 16px; font-weight: 600; }
+    .nav-links a.cta:hover { background: var(--green); color: #002014; }
+    .nav-toggle { display: none; background: none; color: var(--text); font-size: 1.5rem; margin-left: auto; }
+
+    /* HERO */
+    header.hero { padding: 78px 0 56px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); border: 1px solid var(--border); padding: 6px 14px; border-radius: 999px; background: var(--panel); margin-bottom: 26px; }
+    .eyebrow .pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1);} 50% { opacity: .35; transform: scale(.6);} }
+    header.hero h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(2.5rem, 6vw, 4.3rem); line-height: 1.04; letter-spacing: -0.03em; max-width: 16ch; }
+    header.hero h1 em { font-style: normal; color: var(--green); }
+    header.hero .lead { font-size: clamp(1.05rem, 2vw, 1.3rem); color: var(--muted); max-width: 58ch; margin-top: 24px; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; }
+    .btn { display: inline-flex; align-items: center; gap: 9px; padding: 14px 26px; border-radius: 999px; font-weight: 600; font-size: 0.98rem; transition: all .2s; border: 1px solid transparent; }
+    .btn-primary { background: var(--green); color: #002014; box-shadow: 0 8px 30px var(--green-glow); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px var(--green-glow); }
+    .btn-ghost { background: transparent; color: var(--text); border-color: var(--border-hi); }
+    .btn-ghost:hover { background: var(--panel); border-color: var(--green); color: var(--green); }
+    .hero-note { margin-top: 20px; color: var(--muted2); font-size: 0.82rem; }
+    .hero-note a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+
+    /* SECTIONS */
+    section { padding: 54px 0; position: relative; }
+    .section-head { margin-bottom: 34px; }
+    .section-head .kicker { font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); }
+    .section-head h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.7rem, 3.5vw, 2.5rem); letter-spacing: -0.02em; margin-top: 8px; }
+    .section-head p { color: var(--muted); max-width: 64ch; margin-top: 12px; }
+
+    /* VALUES */
+    .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .value { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px 24px; transition: border-color .2s, transform .2s; }
+    .value:hover { border-color: var(--border-hi); transform: translateY(-3px); }
+    .value .ic { font-size: 1.7rem; margin-bottom: 12px; }
+    .value h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.12rem; margin-bottom: 6px; }
+    .value p { color: var(--muted); font-size: 0.92rem; }
+
+    /* SKILL TREE */
+    .tree { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; }
+    .tier { background: linear-gradient(180deg, rgba(0,230,118,0.05), rgba(0,230,118,0.01)); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; }
+    .tier-tag { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); }
+    .tier h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; margin: 6px 0 8px; }
+    .tier .tier-blurb { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+    .node { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; background: rgba(0,0,0,0.15); transition: all .18s; }
+    .node:hover { border-color: var(--border-hi); background: var(--panel); transform: translateX(3px); }
+    .node .dot { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--green); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--green); flex-shrink: 0; font-weight: 700; }
+    .node .n-body { flex: 1; min-width: 0; }
+    .node .n-body b { display: block; font-size: 0.94rem; font-family: 'Space Grotesk', sans-serif; }
+    .node .n-body span { font-size: 0.78rem; color: var(--muted2); }
+    .node .arrow { color: var(--muted2); font-size: 1rem; transition: color .18s; }
+    .node:hover .arrow { color: var(--green); }
+    .tier-num { position: absolute; }
+
+    /* CATALOG */
+    .filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .filter { background: transparent; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 9px 18px; font-size: 0.9rem; font-weight: 500; transition: all .18s; }
+    .filter:hover { color: var(--text); border-color: var(--border-hi); }
+    .filter.active { background: var(--green); color: #002014; border-color: var(--green); font-weight: 600; }
+
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .card { background: linear-gradient(180deg, rgba(0,230,118,0.05), rgba(0,230,118,0.01)); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .card:hover { border-color: var(--border-hi); transform: translateY(-4px); box-shadow: 0 16px 44px rgba(0,0,0,0.35); }
+    .card .thumb { height: 172px; position: relative; overflow: hidden; background: radial-gradient(circle at 50% 35%, rgba(0,230,118,0.16), rgba(0,32,26,0.4) 70%); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+    .card .thumb svg { width: 74%; height: 74%; }
+    .card .thumb img.ph { width: 100%; height: 100%; object-fit: cover; }
+    .card .thumb .vendor { position: absolute; top: 10px; left: 10px; font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); background: rgba(0,12,9,0.7); border: 1px solid var(--border); padding: 4px 9px; border-radius: 999px; backdrop-filter: blur(4px); }
+    .card .body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .card .tag { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+    .card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; line-height: 1.25; margin-bottom: 8px; }
+    .card .desc { color: var(--muted); font-size: 0.88rem; flex: 1; }
+    .card .meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0; }
+    .badge { font-size: 0.72rem; color: var(--muted2); border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px; }
+    .card .foot { display: flex; align-items: center; justify-content: space-between; margin-top: auto; gap: 12px; }
+    .price { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.28rem; }
+    .price small { color: var(--muted2); font-weight: 400; font-size: 0.72rem; }
+    .buy { display: inline-flex; align-items: center; gap: 6px; background: var(--panel); color: var(--green); border: 1px solid var(--border-hi); border-radius: 999px; padding: 9px 15px; font-weight: 600; font-size: 0.84rem; transition: all .18s; white-space: nowrap; }
+    .buy:hover { background: var(--green); color: #002014; }
+
+    /* DIRECT STORE */
+    .store-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .store-card { background: linear-gradient(160deg, rgba(0,230,118,0.08), rgba(0,207,167,0.03)); border: 1px solid var(--border-hi); border-radius: var(--radius); padding: 26px; display: flex; flex-direction: column; }
+    .store-card .sc-art { width: 84px; height: 84px; margin-bottom: 16px; }
+    .store-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; margin-bottom: 8px; }
+    .store-card p { color: var(--muted); font-size: 0.9rem; flex: 1; }
+    .store-card .sc-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; gap: 12px; }
+    .store-card .sc-price { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.35rem; }
+    .store-card .sc-price small { font-weight: 400; font-size: 0.72rem; color: var(--muted2); }
+    .pay { background: var(--green); color: #002014; border-radius: 999px; padding: 11px 20px; font-weight: 700; font-size: 0.9rem; transition: all .2s; display: inline-flex; align-items: center; gap: 7px; }
+    .pay:hover { box-shadow: 0 8px 24px var(--green-glow); transform: translateY(-1px); }
+    .stripe-note { text-align: center; margin-top: 22px; color: var(--muted2); font-size: 0.82rem; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .stripe-note svg { width: 40px; height: auto; opacity: .8; vertical-align: middle; }
+
+    /* LEARN */
+    .learn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .learn-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; display: flex; gap: 18px; align-items: flex-start; transition: border-color .2s; }
+    .learn-card:hover { border-color: var(--border-hi); }
+    .learn-card .ic { font-size: 1.9rem; flex-shrink: 0; }
+    .learn-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; margin-bottom: 6px; }
+    .learn-card p { color: var(--muted); font-size: 0.92rem; }
+    .learn-card .link { color: var(--green); font-weight: 600; font-size: 0.88rem; margin-top: 10px; display: inline-block; }
+
+    /* SAFETY */
+    .safety { background: linear-gradient(135deg, var(--dark2), var(--dark3)); border: 1px solid var(--border); border-radius: var(--radius); padding: 42px; }
+    .safety-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+    .safety h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); letter-spacing: -0.02em; margin-bottom: 14px; }
+    .safety p { color: var(--muted); margin-bottom: 12px; }
+    .safety ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .safety li { display: flex; gap: 12px; align-items: flex-start; font-size: 0.95rem; }
+    .safety li .ck { color: var(--green); flex-shrink: 0; font-weight: 700; }
+
+    /* FAQ */
+    .faq { display: flex; flex-direction: column; gap: 12px; max-width: 820px; }
+    details { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 4px 22px; transition: border-color .2s; }
+    details[open] { border-color: var(--border-hi); }
+    summary { list-style: none; cursor: pointer; padding: 18px 0; font-weight: 600; font-family: 'Space Grotesk', sans-serif; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; color: var(--green); font-size: 1.4rem; transition: transform .2s; }
+    details[open] summary::after { transform: rotate(45deg); }
+    details p { color: var(--muted); padding-bottom: 20px; font-size: 0.94rem; }
+
+    /* NEWSLETTER */
+    .cta-band { text-align: center; background: linear-gradient(135deg, rgba(0,230,118,0.08), rgba(0,207,167,0.04)); border: 1px solid var(--border); border-radius: var(--radius); padding: 54px 32px; }
+    .cta-band h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.3rem); letter-spacing: -0.02em; }
+    .cta-band p { color: var(--muted); margin: 14px auto 26px; max-width: 52ch; }
+    .subscribe { display: flex; gap: 10px; max-width: 460px; margin: 0 auto; }
+    .subscribe input { flex: 1; background: rgba(0,0,0,0.25); border: 1px solid var(--border-hi); border-radius: 999px; padding: 13px 20px; color: var(--text); font-family: inherit; font-size: 0.95rem; outline: none; }
+    .subscribe input:focus { border-color: var(--green); }
+    .subscribe button { background: var(--green); color: #002014; border-radius: 999px; padding: 13px 24px; font-weight: 600; }
+
+    /* DISCLOSURE */
+    .disclosure { background: rgba(255,197,61,0.06); border: 1px solid rgba(255,197,61,0.25); border-radius: 12px; padding: 14px 18px; color: var(--muted); font-size: 0.84rem; display: flex; gap: 10px; align-items: flex-start; }
+    .disclosure b { color: var(--amber); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 54px 0 40px; margin-top: 40px; }
+    .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 32px; }
+    .foot-brand p { color: var(--muted); font-size: 0.9rem; margin-top: 14px; max-width: 34ch; }
+    .foot-col h4 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted2); margin-bottom: 14px; }
+    .foot-col a { display: block; color: var(--muted); font-size: 0.92rem; margin-bottom: 10px; transition: color .2s; }
+    .foot-col a:hover { color: var(--green); }
+    .foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted2); font-size: 0.84rem; }
+
+    .toast { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--green); color: #002014; padding: 13px 24px; border-radius: 999px; font-weight: 600; font-size: 0.92rem; z-index: 300; transition: transform .3s; box-shadow: 0 10px 30px var(--green-glow); }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 900px) {
+      .values, .grid, .tree, .store-grid { grid-template-columns: repeat(2, 1fr); }
+      .learn-grid, .safety-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .tree { gap: 16px; }
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
-    }
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #00e676;
-      margin-bottom: 0.75rem;
-    }
-    .tagline {
-      font-size: 1.2rem;
-      opacity: 0.7;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-    .body {
-      font-size: 1rem;
-      opacity: 0.55;
-      line-height: 1.6;
-    }
-    .dot {
-      width: 8px; height: 8px;
-      background: #00e676;
-      border-radius: 50%;
-      display: inline-block;
-      margin: 2rem auto 0;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(0.6); }
+    @media (max-width: 620px) {
+      .nav-links { display: none; }
+      .nav-links.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; background: var(--dark2); padding: 20px 24px; border-bottom: 1px solid var(--border); gap: 16px; }
+      .nav-toggle { display: block; }
+      .values, .grid, .tree, .store-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; }
+      .safety { padding: 26px; }
+      .subscribe { flex-direction: column; }
+      .subscribe button { border-radius: 12px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <span class="emoji">🧫</span>
-    <h1>Cellsius</h1>
-    <p class="tagline">Living systems for everyone.</p>
-    <p class="body">Open source biology. Open source future.</p>
-    <div class="dot"></div>
-  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#top" class="logo"><span class="mark">🧫</span> Cell<b>sius</b></a>
+      <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">☰</button>
+      <div class="nav-links" id="navlinks">
+        <a href="#skilltree">Skill Tree</a>
+        <a href="#shop">Shop</a>
+        <a href="#store">Our Kits</a>
+        <a href="#learn">Learn</a>
+        <a href="about.html" class="cta">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <span id="top"></span>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow"><span class="pulse"></span> A shop + a learning path &middot; Open source biology</span>
+      <h1>Level up in <em>real biology.</em></h1>
+      <p class="lead">Cellsius is a curated shop and skill tree for hands-on molecular biology. Follow the path from your first petri dish to CRISPR gene editing &mdash; and get the exact kits, gear, and reagents that teach each skill.</p>
+      <div class="hero-cta">
+        <a href="#skilltree" class="btn btn-primary">Explore the skill tree →</a>
+        <a href="#shop" class="btn btn-ghost">Browse the shop</a>
+      </div>
+      <p class="hero-note">Some links are affiliate links &mdash; we may earn a commission at no extra cost to you. <a href="about.html#affiliate">How this works.</a></p>
+    </div>
+  </header>
+
+  <!-- VALUES -->
+  <section class="wrap" style="padding-top:20px">
+    <div class="values">
+      <div class="value"><div class="ic">🗺️</div><h3>A path, not a pile</h3><p>Skills build on each other. The skill tree shows what to learn next &mdash; and what to buy to get there.</p></div>
+      <div class="value"><div class="ic">🔎</div><h3>Curated, not everything</h3><p>We hand-pick trusted kits and gear from makers like The&nbsp;ODIN, plus lab staples, so you don't have to guess.</p></div>
+      <div class="value"><div class="ic">🛡️</div><h3>Safe by design</h3><p>Only non-pathogenic, BSL-1 organisms and education-grade materials. Never for clinical, human, or animal use.</p></div>
+    </div>
+  </section>
+
+  <!-- SKILL TREE -->
+  <section class="wrap" id="skilltree">
+    <div class="section-head">
+      <div class="kicker">The Biotech Skill Tree</div>
+      <h2>Unlock biology, one skill at a time</h2>
+      <p>Inspired by gamified learning paths, the tree turns "where do I even start?" into a clear route. Each node is a real, teachable skill &mdash; click it to get the kit or tool that teaches it.</p>
+    </div>
+    <div class="tree" id="tree"></div>
+  </section>
+
+  <!-- SHOP (AFFILIATE) -->
+  <section class="wrap" id="shop">
+    <div class="section-head">
+      <div class="kicker">The Shop</div>
+      <h2>Curated kits, gear &amp; reagents</h2>
+      <p>Everything here is chosen for learning at home, in classrooms, and in community biolabs. Prices are indicative and set by each vendor &mdash; tap through for the live price and to buy.</p>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter active" data-cat="all">All</button>
+      <button class="filter" data-cat="kits">🧬 Kits</button>
+      <button class="filter" data-cat="equipment">🔬 Equipment</button>
+      <button class="filter" data-cat="supplies">🧫 Supplies</button>
+    </div>
+    <div class="grid" id="productGrid"></div>
+    <div style="margin-top:26px"><div class="disclosure"><span>⚖️</span><span><b>Affiliate disclosure:</b> As an Amazon Associate and partner of independent makers, Cellsius earns from qualifying purchases made through links above. It costs you nothing extra and helps keep our guides free. We only list gear we'd actually recommend.</span></div></div>
+  </section>
+
+  <!-- OUR KITS (DIRECT / STRIPE) -->
+  <section class="wrap" id="store">
+    <div class="section-head">
+      <div class="kicker">From Cellsius &middot; Secure checkout</div>
+      <h2>Our own kits &amp; guides</h2>
+      <p>A few things we make ourselves &mdash; sold directly with secure card payment. The perfect on-ramp before you branch out into the tree.</p>
+    </div>
+    <div class="store-grid" id="storeGrid"></div>
+    <div class="stripe-note">
+      <span>Payments secured by</span>
+      <svg viewBox="0 0 60 25" aria-label="Stripe" xmlns="http://www.w3.org/2000/svg"><path fill="#00e676" d="M5 10.4c0-.8.66-1.1 1.74-1.1 1.56 0 3.53.47 5.08 1.3V5.83a13.5 13.5 0 0 0-5.08-.94C2.58 4.9 0 7.06 0 10.66c0 5.63 7.74 4.73 7.74 7.16 0 .95-.82 1.26-1.96 1.26-1.7 0-3.87-.7-5.6-1.64v4.85a14.2 14.2 0 0 0 5.6 1.17c4.26 0 7-2.1 7-5.74 0-6.08-7.78-5-7.78-7.28zM19.8 2.2l-4.62.98-.02 15.17c0 2.8 2.1 4.87 4.9 4.87 1.55 0 2.7-.28 3.32-.62v-3.85c-.6.24-3.6 1.12-3.6-1.7v-6.2h3.6V6.9h-3.6zM29.9 8.4l-.3-1.5h-4.1v16.1h4.74v-10.9c1.12-1.47 3-1.2 3.6-1v-4.4c-.62-.23-2.82-.65-3.94 1.6zM38.7 6.9h-4.76v16.1h4.76zM38.7 2.3l-4.76 1v3.87l4.76-1.02zM48.9 6.6c-1.86 0-3.05.87-3.72 1.48l-.25-1.18h-4.18v21.4l4.74-1 .02-5.2c.68.5 1.68 1.2 3.35 1.2 3.4 0 6.5-2.73 6.5-8.75-.02-5.5-3.16-7.95-6.2-8zm-1.14 12.3c-1.12 0-1.78-.4-2.24-.9l-.03-7.05c.5-.55 1.18-.93 2.27-.93 1.74 0 2.94 1.95 2.94 4.42 0 2.53-1.18 4.46-2.94 4.46zM60 15.1c0-4.72-2.28-8.45-6.65-8.45s-7.02 3.73-7.02 8.42c0 5.55 3.14 8.36 7.62 8.36 2.2 0 3.85-.5 5.1-1.2v-3.8c-1.25.62-2.68 1-4.5 1-1.78 0-3.36-.62-3.56-2.78h8.98c0-.24.03-1.2.03-1.65zm-9.07-1.75c0-2.07 1.27-2.93 2.42-2.93 1.12 0 2.32.86 2.32 2.93z"></path></svg>
+      <span>&middot; demo mode until keys are added</span>
+    </div>
+  </section>
+
+  <!-- LEARN -->
+  <section class="wrap" id="learn">
+    <div class="section-head">
+      <div class="kicker">Learn</div>
+      <h2>You don't need a degree to start</h2>
+      <p>Every protocol we publish is free and open. Start with the fundamentals, then pick up a kit when you're ready to get your hands wet.</p>
+    </div>
+    <div class="learn-grid">
+      <div class="learn-card"><div class="ic">🧭</div><div><h3>Biology 101 for beginners</h3><p>A plain-language crash course in DNA, cells, and genetic engineering &mdash; what a gene is and what CRISPR actually does.</p><a class="link" href="learn.html">Read the guide →</a></div></div>
+      <div class="learn-card"><div class="ic">🧾</div><div><h3>Open protocols library</h3><p>Step-by-step protocols mapped to every skill in the tree &mdash; free to read before you buy, and yours to keep.</p><a class="link" href="learn.html#protocols">Browse protocols →</a></div></div>
+      <div class="learn-card"><div class="ic">🏫</div><div><h3>Classroom &amp; educator packs</h3><p>Discounted multi-student bundles, lesson plans mapped to NGSS standards, and teacher support for grades 9+.</p><a class="link" href="learn.html#educators">For educators →</a></div></div>
+      <div class="learn-card"><div class="ic">💬</div><div><h3>Community &amp; support</h3><p>Join thousands of curious builders. Ask questions, share results, and troubleshoot with people who've done it.</p><a class="link" href="learn.html#community">Join the community →</a></div></div>
+    </div>
+  </section>
+
+  <!-- SAFETY -->
+  <section class="wrap" id="safety">
+    <div class="safety"><div class="safety-grid">
+      <div>
+        <div class="kicker" style="font-family:'Space Mono',monospace;font-size:0.78rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal)">Responsible science</div>
+        <h2>Safety &amp; ethics come first</h2>
+        <p>Cellsius exists to make biology approachable &mdash; and that means doing it responsibly. Every product we list or sell is chosen for education and beginner safety.</p>
+        <p>We do not sell or promote human pathogens, controlled organisms, or anything intended for use in or on the human body. Our picks use the same non-pathogenic strains found in school and university teaching labs.</p>
+      </div>
+      <div><ul>
+        <li><span class="ck">✓</span> Non-pathogenic, BSL-1 organisms only</li>
+        <li><span class="ck">✓</span> Written safety &amp; disposal guidance</li>
+        <li><span class="ck">✓</span> Not for human, animal, or clinical use</li>
+        <li><span class="ck">✓</span> We follow applicable biosafety regulations</li>
+        <li><span class="ck">✓</span> Age 16+ or adult supervision recommended</li>
+      </ul></div>
+    </div></div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="wrap" id="faq">
+    <div class="section-head"><div class="kicker">Questions</div><h2>Frequently asked</h2></div>
+    <div class="faq">
+      <details open><summary>What's the difference between the Shop and Our Kits?</summary><p><b>Shop</b> items are curated picks from trusted makers and retailers &mdash; you buy on their site through an affiliate link, and we may earn a small commission. <b>Our Kits</b> are made by Cellsius and sold here directly with secure card checkout.</p></details>
+      <details><summary>Is this safe to do at home?</summary><p>Yes. Everything we list uses non-pathogenic, biosafety level 1 (BSL-1) organisms &mdash; the same harmless strains used in classrooms worldwide. Each kit includes safety and disposal guidance. We recommend users be 16+ or supervised by an adult.</p></details>
+      <details><summary>Do I need prior experience or equipment?</summary><p>No. The skill tree starts from the very basics and tells you exactly what to learn and buy next. Beginner kits include everything you need; the Equipment section covers affordable gear when you're ready for more.</p></details>
+      <details><summary>Is genetic engineering at home legal?</summary><p>In most countries, working with non-pathogenic organisms for personal education is legal. Rules vary by region, so please follow your local laws. We never list regulated organisms or anything for use in humans or animals.</p></details>
+      <details><summary>How does affiliate pricing work?</summary><p>Affiliate links cost you nothing extra &mdash; the price is the vendor's normal price, and we receive a small commission that helps keep our guides free. Prices shown here are indicative; the live price is always on the vendor's page.</p></details>
+      <details><summary>How does payment work for Our Kits?</summary><p>Checkout is handled by Stripe, so your card details never touch our servers. This demo storefront runs in "demo mode" until Stripe keys are added &mdash; buttons fall back to an email order in the meantime.</p></details>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="wrap">
+    <div class="cta-band">
+      <h2>Get new skills &amp; kits first</h2>
+      <p>One email a month: new skill-tree branches, open protocols, and the occasional discount. No spam, unsubscribe anytime.</p>
+      <form class="subscribe" onsubmit="subscribe(event)"><input type="email" placeholder="you@example.com" required aria-label="Email address"><button type="submit">Subscribe</button></form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand"><a href="#top" class="logo"><span class="mark">🧫</span> Cell<b>sius</b></a><p>Living systems for everyone. Open source biology, open source future.</p></div>
+        <div class="foot-col"><h4>Explore</h4><a href="#skilltree">Skill tree</a><a href="#shop">Shop</a><a href="#store">Our kits</a><a href="learn.html">Learn &amp; protocols</a></div>
+        <div class="foot-col"><h4>Company</h4><a href="about.html">About &amp; mission</a><a href="about.html#affiliate">Affiliate disclosure</a><a href="#safety">Safety &amp; ethics</a><a href="#" onclick="soon(event)">Contact</a></div>
+        <div class="foot-col"><h4>Legal</h4><a href="#" onclick="soon(event)">Terms</a><a href="#" onclick="soon(event)">Privacy</a><a href="#faq">FAQ</a></div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Cellsius &middot; Living systems for everyone.</span>
+        <span>Educational products only. Not for clinical, human, or animal use.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ═══ CONFIG — edit these to go live ═══ */
+    const CONFIG = {
+      // Amazon Associates tag appended to Amazon links (get one at affiliate-program.amazon.com)
+      amazonTag: 'cellsius-20',
+      // Optional referral/UTM appended to The ODIN links, e.g. 'ref=cellsius' (leave '' if none)
+      odinRef: '',
+      // Where demo/fallback orders are emailed
+      orderEmail: 'orders@cellsius.org',
+      // Stripe Payment Links for "Our Kits" (Stripe Dashboard → Payment Links).
+      // Paste the buy.stripe.com URL for each. Leave '' to fall back to an email order.
+      stripeLinks: {
+        'd-bundle': '',
+        'd-handbook': '',
+        'd-supporter': '',
+      }
+    };
+
+    /* ═══ SVG PRODUCT ART (self-contained; swap any product's `image` for a photo URL) ═══ */
+    const G = '#00e676', T = '#00cfa7', W = '#eafff4', A = '#ffc53d';
+    const ART = {
+      genlab: `<svg viewBox="0 0 120 90"><path d="M52 12v22L34 70a6 6 0 0 0 5 9h42a6 6 0 0 0 5-9L68 34V12" fill="none" stroke="${G}" stroke-width="3"/><path d="M45 55h30l6 12a4 4 0 0 1-3 6H42a4 4 0 0 1-3-6z" fill="${G}" opacity=".18"/><circle cx="52" cy="63" r="3" fill="${T}"/><circle cx="66" cy="69" r="2.5" fill="${G}"/><circle cx="58" cy="72" r="2" fill="${A}"/><line x1="47" y1="12" x2="73" y2="12" stroke="${W}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      crispr: `<svg viewBox="0 0 120 90"><path d="M20 45c14-10 26 10 40 0s26-10 40 0" fill="none" stroke="${G}" stroke-width="3"/><path d="M20 60c14-10 26 10 40 0" fill="none" stroke="${T}" stroke-width="3" opacity=".5"/><circle cx="78" cy="41" r="6" fill="none" stroke="${A}" stroke-width="3"/><circle cx="78" cy="57" r="6" fill="none" stroke="${A}" stroke-width="3"/><path d="M83 45l16 6M83 53l16-6" stroke="${A}" stroke-width="3" stroke-linecap="round"/></svg>`,
+      yeast: `<svg viewBox="0 0 120 90"><ellipse cx="60" cy="52" rx="30" ry="22" fill="${G}" opacity=".16" stroke="${G}" stroke-width="3"/><path d="M34 52c8-14 44-14 52 0" fill="none" stroke="${T}" stroke-width="2.5" opacity=".6"/><circle cx="50" cy="48" r="4" fill="${A}"/><circle cx="68" cy="45" r="3" fill="${G}"/><circle cx="60" cy="58" r="3.5" fill="${T}"/><path d="M74 26l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="${A}"/></svg>`,
+      glow: `<svg viewBox="0 0 120 90"><rect x="48" y="16" width="24" height="58" rx="12" fill="none" stroke="${G}" stroke-width="3"/><rect x="48" y="42" width="24" height="32" rx="12" fill="${G}" opacity=".22"/><circle cx="56" cy="58" r="3" fill="${T}"/><circle cx="64" cy="52" r="2.5" fill="${G}"/><circle cx="60" cy="66" r="2.5" fill="${A}"/><path d="M60 8v6M42 16l4 4M78 16l-4 4" stroke="${A}" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+      plant: `<svg viewBox="0 0 120 90"><path d="M50 78h20l-2-26H52z" fill="none" stroke="${G}" stroke-width="3"/><path d="M52 60h16" stroke="${T}" stroke-width="2.5"/><path d="M60 52V30" stroke="${G}" stroke-width="3"/><path d="M60 40c-10-2-14-10-14-16 8 0 14 6 14 12M60 34c8-2 12-8 12-14-7 0-12 5-12 10" fill="${G}" opacity=".3" stroke="${G}" stroke-width="2"/></svg>`,
+      microbe: `<svg viewBox="0 0 120 90"><circle cx="60" cy="47" r="30" fill="${T}" opacity=".1" stroke="${G}" stroke-width="3"/><circle cx="60" cy="47" r="30" fill="none" stroke="${W}" stroke-width="1" opacity=".3"/><circle cx="50" cy="40" r="4" fill="${G}"/><circle cx="70" cy="44" r="5" fill="${T}"/><circle cx="58" cy="58" r="3.5" fill="${A}"/><circle cx="68" cy="58" r="2.5" fill="${G}"/><circle cx="46" cy="54" r="2" fill="${T}"/></svg>`,
+      pipette: `<svg viewBox="0 0 120 90"><path d="M64 10l10 4-22 44-8 2 2-8z" fill="none" stroke="${G}" stroke-width="3" stroke-linejoin="round"/><rect x="60" y="14" width="12" height="10" rx="2" transform="rotate(24 66 19)" fill="${T}" opacity=".4"/><path d="M44 60l-4 14 6-2 4-10z" fill="${A}" opacity=".5" stroke="${A}" stroke-width="2"/><circle cx="43" cy="78" r="3" fill="${G}"/></svg>`,
+      centrifuge: `<svg viewBox="0 0 120 90"><circle cx="60" cy="47" r="30" fill="none" stroke="${G}" stroke-width="3"/><circle cx="60" cy="47" r="6" fill="${T}"/><g stroke="${W}" stroke-width="3" stroke-linecap="round" opacity=".7"><line x1="60" y1="47" x2="60" y2="22"/><line x1="60" y1="47" x2="82" y2="60"/><line x1="60" y1="47" x2="38" y2="60"/></g><circle cx="60" cy="20" r="4" fill="${A}"/><circle cx="84" cy="61" r="4" fill="${A}"/><circle cx="36" cy="61" r="4" fill="${A}"/></svg>`,
+      incubator: `<svg viewBox="0 0 120 90"><rect x="30" y="40" width="60" height="34" rx="5" fill="${G}" opacity=".14" stroke="${G}" stroke-width="3"/><rect x="46" y="30" width="6" height="24" rx="3" fill="${T}"/><rect x="58" y="30" width="6" height="24" rx="3" fill="${T}"/><rect x="70" y="30" width="6" height="24" rx="3" fill="${T}"/><path d="M44 20c0 4-4 4-4 8M60 18c0 4-4 4-4 8M76 20c0 4-4 4-4 8" stroke="${A}" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+      gel: `<svg viewBox="0 0 120 90"><rect x="28" y="22" width="64" height="46" rx="4" fill="${T}" opacity=".12" stroke="${G}" stroke-width="3"/><g fill="${G}"><rect x="36" y="30" width="10" height="4" rx="2"/><rect x="36" y="42" width="10" height="4" rx="2" opacity=".7"/><rect x="55" y="34" width="10" height="4" rx="2"/><rect x="55" y="50" width="10" height="4" rx="2" opacity=".6"/><rect x="74" y="30" width="10" height="4" rx="2"/><rect x="74" y="46" width="10" height="4" rx="2" opacity=".7"/></g></svg>`,
+      microscope: `<svg viewBox="0 0 120 90"><path d="M58 16l10 4-16 34-10-4z" fill="none" stroke="${G}" stroke-width="3" stroke-linejoin="round"/><path d="M46 50c-8 6-12 16-10 24h44" fill="none" stroke="${G}" stroke-width="3" stroke-linecap="round"/><rect x="40" y="72" width="44" height="6" rx="3" fill="${T}"/><circle cx="63" cy="20" r="4" fill="${A}"/><line x1="60" y1="60" x2="60" y2="70" stroke="${W}" stroke-width="3"/></svg>`,
+      box: `<svg viewBox="0 0 120 90"><path d="M34 30l26-10 26 10v34l-26 10-26-10z" fill="${G}" opacity=".1" stroke="${G}" stroke-width="3" stroke-linejoin="round"/><path d="M34 30l26 10 26-10M60 40v34" stroke="${T}" stroke-width="2" opacity=".6"/><circle cx="50" cy="52" r="5" fill="none" stroke="${A}" stroke-width="2.5"/><circle cx="66" cy="55" r="5" fill="none" stroke="${A}" stroke-width="2.5"/></svg>`,
+      plate: `<svg viewBox="0 0 120 90"><ellipse cx="60" cy="60" rx="34" ry="12" fill="${G}" opacity=".16" stroke="${G}" stroke-width="3"/><ellipse cx="60" cy="50" rx="34" ry="12" fill="${T}" opacity=".12" stroke="${G}" stroke-width="2.5"/><ellipse cx="60" cy="40" rx="34" ry="12" fill="#00201a" stroke="${G}" stroke-width="2.5"/><circle cx="52" cy="39" r="2.5" fill="${G}"/><circle cx="66" cy="41" r="2" fill="${T}"/></svg>`,
+      cells: `<svg viewBox="0 0 120 90"><path d="M50 14h20v10l-4 6v30a6 6 0 0 1-12 0V30l-4-6z" fill="none" stroke="${G}" stroke-width="3" stroke-linejoin="round"/><path d="M54 44v16a6 6 0 0 0 12 0V44z" fill="${G}" opacity=".25"/><circle cx="60" cy="54" r="2.5" fill="${T}"/><circle cx="57" cy="60" r="2" fill="${A}"/></svg>`,
+      dish: `<svg viewBox="0 0 120 90"><ellipse cx="60" cy="50" rx="34" ry="16" fill="${T}" opacity=".1" stroke="${G}" stroke-width="3"/><ellipse cx="60" cy="46" rx="34" ry="16" fill="none" stroke="${W}" stroke-width="1.5" opacity=".4"/><path d="M40 46a20 8 0 0 0 40 0" fill="none" stroke="${G}" stroke-width="2" opacity=".5"/></svg>`,
+      loop: `<svg viewBox="0 0 120 90"><line x1="40" y1="74" x2="66" y2="34" stroke="${G}" stroke-width="4" stroke-linecap="round"/><circle cx="72" cy="26" r="12" fill="none" stroke="${T}" stroke-width="3"/><rect x="34" y="70" width="12" height="8" rx="2" transform="rotate(-33 40 74)" fill="${A}"/></svg>`,
+      broth: `<svg viewBox="0 0 120 90"><rect x="48" y="10" width="10" height="8" fill="none" stroke="${G}" stroke-width="3"/><path d="M44 20h18v6l6 8v36a6 6 0 0 1-6 6H44a6 6 0 0 1-6-6V34l6-8z" fill="none" stroke="${G}" stroke-width="3" stroke-linejoin="round"/><path d="M38 50h30v26a6 6 0 0 1-6 6H44a6 6 0 0 1-6-6z" fill="${G}" opacity=".22"/><circle cx="48" cy="64" r="2.5" fill="${T}"/><circle cx="58" cy="70" r="2" fill="${A}"/></svg>`,
+      gloves: `<svg viewBox="0 0 120 90"><path d="M46 78V44c0-3 4-3 4 0v6V30c0-3 4-3 4 0v18V26c0-3 4-3 4 0v22V30c0-3 4-3 4 0v20l6-6c2-2 6 1 4 4l-8 14v16z" fill="${G}" opacity=".16" stroke="${G}" stroke-width="3" stroke-linejoin="round"/></svg>`,
+      bundle: `<svg viewBox="0 0 120 90"><path d="M32 34l28-12 28 12v28L60 74 32 62z" fill="${G}" opacity=".14" stroke="${G}" stroke-width="3" stroke-linejoin="round"/><path d="M32 34l28 12 28-12M60 46v28" stroke="${T}" stroke-width="2"/><path d="M60 14l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="${A}"/></svg>`,
+      handbook: `<svg viewBox="0 0 120 90"><rect x="38" y="18" width="44" height="56" rx="4" fill="${G}" opacity=".14" stroke="${G}" stroke-width="3"/><line x1="50" y1="18" x2="50" y2="74" stroke="${T}" stroke-width="2"/><path d="M60 34c6-6 12 0 12 4M60 34c-4-4-9-1-9 3" fill="none" stroke="${A}" stroke-width="2.5"/><circle cx="60" cy="34" r="2" fill="${A}"/><line x1="58" y1="48" x2="76" y2="48" stroke="${W}" stroke-width="2" opacity=".5"/><line x1="58" y1="56" x2="76" y2="56" stroke="${W}" stroke-width="2" opacity=".5"/></svg>`,
+      supporter: `<svg viewBox="0 0 120 90"><path d="M60 74S34 58 34 40a14 14 0 0 1 26-7 14 14 0 0 1 26 7c0 18-26 34-26 34z" fill="${G}" opacity=".18" stroke="${G}" stroke-width="3" stroke-linejoin="round"/><path d="M48 44c8-6 16 6 24 0" fill="none" stroke="${A}" stroke-width="2.5"/><circle cx="50" cy="42" r="2" fill="${T}"/><circle cx="70" cy="42" r="2" fill="${T}"/></svg>`,
+    };
+
+    /* ═══ CATALOG (affiliate) ═══ */
+    const PRODUCTS = [
+      // KITS — The ODIN
+      { id:'k-genlab', cat:'kits', art:'genlab', tag:'Bestseller', name:'Genetic Engineering Home Lab', vendor:'The ODIN', href:'https://www.the-odin.com/genetic-engineering-home-lab-kit/', price:169, desc:'The complete starter lab. Modify bacteria to express a fluorescent protein and watch your own edit glow.', badges:['Beginner','E. coli K-12','Reusable gear'] },
+      { id:'k-crispr', cat:'kits', art:'crispr', tag:'Popular', name:'Bacterial CRISPR Editing Kit', vendor:'The ODIN', href:'https://www.the-odin.com/crispr-kit/', price:85, desc:'Make a precise, targeted edit to a bacterial gene using Cas9. Learn how genome editing really works.', badges:['Intermediate','Cas9 + gRNA'] },
+      { id:'k-yeast', cat:'kits', art:'yeast', tag:'Kit', name:'Fluorescent Yeast Kit', vendor:'The ODIN', href:'https://www.the-odin.com/', price:49, desc:'Transform baker’s yeast to glow green under UV. A gentle, food-safe intro to genetic transformation.', badges:['Beginner','S. cerevisiae'] },
+      { id:'k-glow', cat:'kits', art:'glow', tag:'Kit', name:'Bioluminescent Bacteria Kit', vendor:'The ODIN', href:'https://www.the-odin.com/', price:39, desc:'Culture naturally glowing marine bacteria and watch them light up the dark. Pure wonder, no modification.', badges:['Beginner','Non-GMO'] },
+      { id:'k-plant', cat:'kits', art:'plant', tag:'Kit', name:'Plant Genetic Engineering Kit', vendor:'The ODIN', href:'https://www.the-odin.com/', price:99, desc:'Use Agrobacterium to introduce new DNA into plant tissue — the method behind modern crop science.', badges:['Intermediate','Tissue culture'] },
+      { id:'k-microbe', cat:'kits', art:'microbe', tag:'Kit', name:'Microbiology Starter Kit', vendor:'The ODIN', href:'https://www.the-odin.com/', price:45, desc:'Pour plates, streak samples, and culture the invisible world around you. The perfect first step.', badges:['Beginner','Ages 12+'] },
+
+      // EQUIPMENT — Amazon
+      { id:'e-pipette', cat:'equipment', art:'pipette', tag:'Gear', name:'Adjustable Micropipette Set', vendor:'Amazon', amazon:'adjustable micropipette set 2-20ul 20-200ul with tips', price:95, desc:'Two precision micropipettes plus tips. The single most useful tool on any molecular bench.', badges:['Includes tips','Calibrated'] },
+      { id:'e-centrifuge', cat:'equipment', art:'centrifuge', tag:'Gear', name:'Mini Benchtop Centrifuge', vendor:'Amazon', amazon:'mini benchtop centrifuge lab 6 tube usb', price:129, desc:'Compact 6-tube centrifuge for spinning down samples. Quiet and built for the home or classroom.', badges:['6 tubes','USB'] },
+      { id:'e-incubator', cat:'equipment', art:'incubator', tag:'Gear', name:'Dry Bath Incubator', vendor:'Amazon', amazon:'dry bath incubator lab digital heat block', price:149, desc:'Hold cultures and reactions at a steady 25–100°C. Essential for transformations and enzyme work.', badges:['Digital','±0.5°C'] },
+      { id:'e-gel', cat:'equipment', art:'gel', tag:'Gear', name:'Gel Electrophoresis Kit', vendor:'Amazon', amazon:'gel electrophoresis kit education dna power supply', price:179, desc:'Visualize and separate DNA by size. Includes gel box and power supply to run your first gel.', badges:['Full set','Safe dye'] },
+      { id:'e-microscope', cat:'equipment', art:'microscope', tag:'Gear', name:'Digital USB Microscope', vendor:'Amazon', amazon:'digital usb microscope 1000x', price:89, desc:'Up to 1000× straight to your screen. See cells, colonies, and microorganisms in vivid detail.', badges:['1000×','Records'] },
+      { id:'e-box', cat:'equipment', art:'box', tag:'Gear', name:'Still-Air Work Box', vendor:'Amazon', amazon:'still air box sterile glovebox', price:65, desc:'A simple enclosure that keeps contamination out while you work with cultures.', badges:['Sterile technique'] },
+
+      // SUPPLIES — Amazon / ODIN
+      { id:'s-plate', cat:'supplies', art:'plate', tag:'Refill', name:'LB Agar Plates (10-pack)', vendor:'Amazon', amazon:'lb agar plates prepoured sterile 10 pack', price:15, desc:'Pre-poured, sterile nutrient plates ready for streaking and culturing bacteria.', badges:['Sterile','10 plates'] },
+      { id:'s-cells', cat:'supplies', art:'cells', tag:'Refill', name:'Competent E. coli (K-12)', vendor:'The ODIN', href:'https://www.the-odin.com/', price:25, desc:'Lab-standard, non-pathogenic competent cells ready to take up new DNA. Shipped cold.', badges:['BSL-1','Ready'] },
+      { id:'s-dish', cat:'supplies', art:'dish', tag:'Refill', name:'Sterile Petri Dishes (20)', vendor:'Amazon', amazon:'sterile petri dishes 90mm 20 pack', price:9, desc:'Twenty sterile, disposable 90 mm dishes for pouring your own plates.', badges:['90 mm','Sterile'] },
+      { id:'s-loop', cat:'supplies', art:'loop', tag:'Refill', name:'Inoculation Loops (25)', vendor:'Amazon', amazon:'inoculation loops sterile disposable 25', price:7, desc:'Pre-sterilized single-use loops for picking colonies and streaking plates.', badges:['Sterile','25-pack'] },
+      { id:'s-broth', cat:'supplies', art:'broth', tag:'Refill', name:'LB Broth Mix (makes 1L)', vendor:'Amazon', amazon:'lb broth powder miller lennox', price:12, desc:'Just add water and sterilize. Makes 1 liter of rich liquid growth medium.', badges:['Makes 1 L','Powder'] },
+      { id:'s-gloves', cat:'supplies', art:'gloves', tag:'Refill', name:'Nitrile Gloves (100)', vendor:'Amazon', amazon:'nitrile gloves powder free 100 count', price:11, desc:'Powder-free nitrile gloves to keep you and your experiments clean.', badges:['Powder-free','100 ct'] },
+    ];
+
+    /* ═══ DIRECT PRODUCTS (Stripe) ═══ */
+    const DIRECT = [
+      { id:'d-bundle', art:'bundle', name:'Cellsius Starter Bundle', price:59, unit:'', desc:'Our curated first-experiment box: agar plates, loops, gloves, a quick-start protocol card, and access to the beginner course. Everything to run your first culture.' },
+      { id:'d-handbook', art:'handbook', name:'Cellsius Protocol Handbook', price:19, unit:' PDF', desc:'A 90-page illustrated field guide to every skill in the tree — sterile technique, transformation, CRISPR, gels, and more. Instant digital download.' },
+      { id:'d-supporter', art:'supporter', name:'Supporter Membership', price:8, unit:'/mo', desc:'Keep our protocols free and open. Supporters get early access to new skill-tree branches, member discounts, and a warm fuzzy feeling.' },
+    ];
+
+    /* ═══ SKILL TREE ═══ */
+    const TIERS = [
+      { t:'Tier I', name:'Foundations', blurb:'Get comfortable working with living cells and sterile technique.', skills:[
+        { n:'Sterile technique', d:'Work clean, avoid contamination', prod:'k-microbe' },
+        { n:'Culturing microbes', d:'Grow bacteria on plates & broth', prod:'k-microbe' },
+        { n:'Using a microscope', d:'See the invisible world', prod:'e-microscope' },
+      ]},
+      { t:'Tier II', name:'Genetic Engineering', blurb:'Move DNA between organisms and make cells do new things.', skills:[
+        { n:'Bacterial transformation', d:'Get new DNA into a cell', prod:'k-genlab' },
+        { n:'Fluorescent proteins', d:'Make life glow', prod:'k-yeast' },
+        { n:'Working with plasmids', d:'The vehicles of new genes', prod:'s-cells' },
+      ]},
+      { t:'Tier III', name:'Gene Editing & Beyond', blurb:'Edit genomes and analyse your results like a pro.', skills:[
+        { n:'CRISPR gene editing', d:'Rewrite a gene, precisely', prod:'k-crispr' },
+        { n:'PCR & gel analysis', d:'Copy and read DNA', prod:'e-gel' },
+        { n:'Plant engineering', d:'Beyond bacteria', prod:'k-plant' },
+      ]},
+    ];
+
+    /* ═══ HELPERS ═══ */
+    const fmt = n => '$' + n.toLocaleString('en-US');
+    const byId = id => PRODUCTS.find(p => p.id === id) || DIRECT.find(p => p.id === id);
+    function buyHref(p) {
+      if (p.amazon) return `https://www.amazon.com/s?k=${encodeURIComponent(p.amazon)}&tag=${encodeURIComponent(CONFIG.amazonTag)}`;
+      if (p.href) { let u = p.href; if (CONFIG.odinRef) u += (u.includes('?') ? '&' : '?') + CONFIG.odinRef; return u; }
+      return '#';
+    }
+    function artHTML(p, cls) {
+      if (p.image) return `<img class="ph" src="${p.image}" alt="${p.name}">`;
+      const svg = ART[p.art] || ART.microbe;
+      return cls ? svg.replace('<svg ', `<svg class="${cls}" `) : svg;
+    }
+
+    /* ═══ RENDER: SHOP ═══ */
+    function renderProducts(filter='all') {
+      document.getElementById('productGrid').innerHTML = PRODUCTS
+        .filter(p => filter==='all' || p.cat===filter)
+        .map(p => `
+          <article class="card">
+            <div class="thumb"><span class="vendor">${p.vendor}</span>${artHTML(p)}</div>
+            <div class="body">
+              <div class="tag">${p.tag}</div>
+              <h3>${p.name}</h3>
+              <p class="desc">${p.desc}</p>
+              <div class="meta">${p.badges.map(b=>`<span class="badge">${b}</span>`).join('')}</div>
+              <div class="foot">
+                <div class="price">${fmt(p.price)} <small>approx</small></div>
+                <a class="buy" href="${buyHref(p)}" target="_blank" rel="sponsored noopener" onclick="track('${p.id}')">Buy at ${p.vendor} ↗</a>
+              </div>
+            </div>
+          </article>`).join('');
+    }
+    document.getElementById('filters').addEventListener('click', e => {
+      const b = e.target.closest('.filter'); if (!b) return;
+      document.querySelectorAll('.filter').forEach(f=>f.classList.remove('active'));
+      b.classList.add('active'); renderProducts(b.dataset.cat);
+    });
+
+    /* ═══ RENDER: DIRECT STORE ═══ */
+    function renderStore() {
+      document.getElementById('storeGrid').innerHTML = DIRECT.map(p => `
+        <article class="store-card">
+          <div class="sc-art">${artHTML(p)}</div>
+          <h3>${p.name}</h3>
+          <p>${p.desc}</p>
+          <div class="sc-foot">
+            <div class="sc-price">${fmt(p.price)}<small>${p.unit||''}</small></div>
+            <button class="pay" onclick="pay('${p.id}', this)">Buy now →</button>
+          </div>
+        </article>`).join('');
+    }
+    async function pay(id, btn) {
+      const p = byId(id);
+      if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = 'Loading…'; }
+      const reset = () => { if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || 'Buy now →'; } };
+      // 1) Real Stripe Checkout via Netlify function (goes live once STRIPE_SECRET_KEY is set)
+      try {
+        const r = await fetch('/.netlify/functions/create-checkout', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id })
+        });
+        if (r.ok) { const data = await r.json(); if (data.url) { window.location.href = data.url; return; } }
+      } catch (e) { /* function not deployed yet — fall through */ }
+      // 2) Stripe Payment Link fallback (no backend)
+      const link = CONFIG.stripeLinks[id];
+      if (link) { window.location.href = link; return; }
+      // 3) Demo fallback → email order
+      reset();
+      const body = `Hi Cellsius, I'd like to buy: ${p.name} (${fmt(p.price)}${p.unit||''}).%0A%0AName:%0AShipping address:`;
+      window.location.href = `mailto:${CONFIG.orderEmail}?subject=${encodeURIComponent('Cellsius order — ' + p.name)}&body=${body}`;
+      showToast('Demo mode — add your Stripe key to take card payments');
+    }
+
+    /* ═══ RENDER: SKILL TREE ═══ */
+    function renderTree() {
+      document.getElementById('tree').innerHTML = TIERS.map(tier => `
+        <div class="tier">
+          <span class="tier-tag">${tier.t}</span>
+          <h3>${tier.name}</h3>
+          <p class="tier-blurb">${tier.blurb}</p>
+          ${tier.skills.map((s,i) => { const p = byId(s.prod); return `
+            <a class="node" href="${buyHref(p)}" target="_blank" rel="sponsored noopener" title="Learn via ${p.name}" onclick="track('${p.id}')">
+              <span class="dot">${i+1}</span>
+              <span class="n-body"><b>${s.n}</b><span>${s.d} &middot; ${p.name}</span></span>
+              <span class="arrow">↗</span>
+            </a>`; }).join('')}
+        </div>`).join('');
+    }
+
+    /* ═══ MISC ═══ */
+    let toastTimer;
+    function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
+    function subscribe(e){ e.preventDefault(); e.target.reset(); showToast('Thanks — you’re on the list! 🧬'); }
+    function soon(e){ e.preventDefault(); showToast('Coming soon 🚧'); }
+    function track(id){ /* hook for analytics/affiliate click tracking */ }
+
+    renderTree(); renderProducts(); renderStore();
+
+    // Stripe Checkout success return (?paid=1)
+    if (new URLSearchParams(location.search).get('paid') === '1') {
+      setTimeout(() => showToast('Payment received — thank you! 🧬 Check your email for a receipt.'), 400);
+      history.replaceState(null, '', location.pathname + location.hash);
+    }
+  </script>
 </body>
 </html>
