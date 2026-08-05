@@ -348,7 +348,7 @@
     <div class="cta-band">
       <h2>Get new skills &amp; kits first</h2>
       <p>One email a month: new skill-tree branches, open protocols, and the occasional discount. No spam, unsubscribe anytime.</p>
-      <form class="subscribe" onsubmit="subscribe(event)"><input type="email" placeholder="you@example.com" required aria-label="Email address"><button type="submit">Subscribe</button></form>
+      <form class="subscribe" onsubmit="subscribe(event)" name="cellsius-newsletter" method="POST" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="cellsius-newsletter" /><p hidden aria-hidden="true" style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p><input type="hidden" name="source" value="cellsius.org" /><input type="email" name="email" placeholder="you@example.com" required aria-label="Email address"><button type="submit">Subscribe</button></form>
     </div>
   </section>
 
@@ -378,7 +378,7 @@
       // Optional referral/UTM appended to The ODIN links, e.g. 'ref=cellsius' (leave '' if none)
       odinRef: '',
       // Where demo/fallback orders are emailed
-      orderEmail: 'orders@cellsius.org',
+      orderEmail: 'hello@biopunklab.com',
       // Stripe Payment Links for "Our Kits" (Stripe Dashboard → Payment Links).
       // Paste the buy.stripe.com URL for each. Leave '' to fall back to an email order.
       stripeLinks: {
@@ -559,7 +559,7 @@
     /* ═══ MISC ═══ */
     let toastTimer;
     function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2200); }
-    function subscribe(e){ e.preventDefault(); e.target.reset(); showToast('Thanks — you’re on the list! 🧬'); }
+    function subscribe(e){ e.preventDefault(); var form=e.target; function done(){ form.reset(); showToast('Thanks — you’re on the list! 🧬'); } fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(form)).toString() }).then(done).catch(done); }
     function soon(e){ e.preventDefault(); showToast('Coming soon 🚧'); }
     function track(id){ /* hook for analytics/affiliate click tracking */ }
 
