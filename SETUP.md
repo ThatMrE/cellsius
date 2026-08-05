@@ -12,7 +12,7 @@ Open `index.html` and edit the `CONFIG` block near the top of the `<script>`:
 const CONFIG = {
   amazonTag: 'cellsius-20',   // ← your Amazon Associates tag
   odinRef:   '',              // ← optional ODIN referral/UTM, e.g. 'ref=cellsius'
-  orderEmail:'orders@cellsius.org',
+  orderEmail:'hello@biopunklab.com',
   stripeLinks: { 'd-bundle': '', 'd-handbook': '', 'd-supporter': '' },
 };
 ```
