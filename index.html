@@ -376,6 +376,8 @@
   <script>
     /* ═══ CONFIG — edit these to go live ═══ */
     const CONFIG = {
+      // Base URL of the interactive biotech skill tree; skill nodes deep-link to /#<tree-id>
+      skillTreeUrl: 'https://biotech-skill-tree.netlify.app/',
       // Amazon Associates tag appended to Amazon links (get one at affiliate-program.amazon.com)
       amazonTag: 'cellsius-20',
       // Optional referral/UTM appended to The ODIN links, e.g. 'ref=cellsius' (leave '' if none)
@@ -454,19 +456,19 @@
     /* ═══ SKILL TREE ═══ */
     const TIERS = [
       { t:'Tier I', name:'Foundations', blurb:'Get comfortable working with living cells and sterile technique.', skills:[
-        { n:'Sterile technique', d:'Work clean, avoid contamination', prod:'k-microbe' },
-        { n:'Culturing microbes', d:'Grow bacteria on plates & broth', prod:'k-microbe' },
-        { n:'Using a microscope', d:'See the invisible world', prod:'e-microscope' },
+        { n:'Sterile technique', d:'Work clean, avoid contamination', prod:'k-microbe', tree:'sterile-technique' },
+        { n:'Culturing microbes', d:'Grow bacteria on plates & broth', prod:'k-microbe', tree:'culturing-conditions' },
+        { n:'Using a microscope', d:'See the invisible world', prod:'e-microscope', tree:'' },
       ]},
       { t:'Tier II', name:'Genetic Engineering', blurb:'Move DNA between organisms and make cells do new things.', skills:[
-        { n:'Bacterial transformation', d:'Get new DNA into a cell', prod:'k-genlab' },
-        { n:'Fluorescent proteins', d:'Make life glow', prod:'k-yeast' },
-        { n:'Working with plasmids', d:'The vehicles of new genes', prod:'s-cells' },
+        { n:'Bacterial transformation', d:'Get new DNA into a cell', prod:'k-genlab', tree:'plasmid-insertion' },
+        { n:'Fluorescent proteins', d:'Make life glow', prod:'k-yeast', tree:'protein-induction' },
+        { n:'Working with plasmids', d:'The vehicles of new genes', prod:'s-cells', tree:'plasmids101' },
       ]},
       { t:'Tier III', name:'Gene Editing & Beyond', blurb:'Edit genomes and analyse your results like a pro.', skills:[
-        { n:'CRISPR gene editing', d:'Rewrite a gene, precisely', prod:'k-crispr' },
-        { n:'PCR & gel analysis', d:'Copy and read DNA', prod:'e-gel' },
-        { n:'Plant engineering', d:'Beyond bacteria', prod:'k-plant' },
+        { n:'CRISPR gene editing', d:'Rewrite a gene, precisely', prod:'k-crispr', tree:'crispr' },
+        { n:'PCR & gel analysis', d:'Copy and read DNA', prod:'e-gel', tree:'pcr' },
+        { n:'Plant engineering', d:'Beyond bacteria', prod:'k-plant', tree:'' },
       ]},
     ];
 
@@ -550,10 +552,12 @@
           <span class="tier-tag">${tier.t}</span>
           <h3>${tier.name}</h3>
           <p class="tier-blurb">${tier.blurb}</p>
-          ${tier.skills.map((s,i) => { const p = byId(s.prod); return `
-            <a class="node" href="${buyHref(p)}" target="_blank" rel="sponsored noopener" title="Learn via ${p.name}" onclick="track('${p.id}')">
+          ${tier.skills.map((s,i) => {
+            const href = CONFIG.skillTreeUrl + (s.tree ? '#' + s.tree : '');
+            return `
+            <a class="node" href="${href}" target="_blank" rel="noopener" title="Open &ldquo;${s.n}&rdquo; in the interactive skill tree" onclick="track('${s.tree||'tree'}')">
               <span class="dot">${i+1}</span>
-              <span class="n-body"><b>${s.n}</b><span>${s.d} &middot; ${p.name}</span></span>
+              <span class="n-body"><b>${s.n}</b><span>${s.d}</span></span>
               <span class="arrow">↗</span>
             </a>`; }).join('')}
         </div>`).join('');
