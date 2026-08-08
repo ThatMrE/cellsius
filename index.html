@@ -220,7 +220,7 @@
       <a href="#top" class="logo"><span class="mark">🧫</span> Cell<b>sius</b></a>
       <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">☰</button>
       <div class="nav-links" id="navlinks">
-        <a href="#skilltree">Skill Tree</a>
+        <a href="https://biotech-skill-tree.netlify.app/" target="_blank" rel="noopener">Skill Tree ↗</a>
         <a href="#shop">Shop</a>
         <a href="#store">Our Kits</a>
         <a href="#learn">Learn</a>
@@ -238,7 +238,7 @@
       <h1>Level up in <em>real biology.</em></h1>
       <p class="lead">Cellsius is a curated shop and skill tree for hands-on molecular biology. Follow the path from your first petri dish to CRISPR gene editing &mdash; and get the exact kits, gear, and reagents that teach each skill.</p>
       <div class="hero-cta">
-        <a href="#skilltree" class="btn btn-primary">Explore the skill tree →</a>
+        <a href="https://biotech-skill-tree.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary">Explore the skill tree ↗</a>
         <a href="#shop" class="btn btn-ghost">Browse the shop</a>
       </div>
       <p class="hero-note">Some links are affiliate links &mdash; we may earn a commission at no extra cost to you. <a href="about.html#affiliate">How this works.</a></p>
@@ -259,7 +259,8 @@
     <div class="section-head">
       <div class="kicker">The Biotech Skill Tree</div>
       <h2>Unlock biology, one skill at a time</h2>
-      <p>Inspired by gamified learning paths, the tree turns "where do I even start?" into a clear route. Each node is a real, teachable skill &mdash; click it to get the kit or tool that teaches it.</p>
+      <p>The tree turns "where do I even start?" into a clear route. Each node below is a real, teachable skill &mdash; click it to get the kit or tool that teaches it, or open the full interactive skill tree to explore every branch.</p>
+      <a href="https://biotech-skill-tree.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:20px">Open the full interactive skill tree ↗</a>
     </div>
     <div class="tree" id="tree"></div>
   </section>
@@ -308,6 +309,8 @@
       <div class="learn-card"><div class="ic">🧾</div><div><h3>Open protocols library</h3><p>Step-by-step protocols mapped to every skill in the tree &mdash; free to read before you buy, and yours to keep.</p><a class="link" href="learn.html#protocols">Browse protocols →</a></div></div>
       <div class="learn-card"><div class="ic">🏫</div><div><h3>Classroom &amp; educator packs</h3><p>Discounted multi-student bundles, lesson plans mapped to NGSS standards, and teacher support for grades 9+.</p><a class="link" href="learn.html#educators">For educators →</a></div></div>
       <div class="learn-card"><div class="ic">💬</div><div><h3>Community &amp; support</h3><p>Join thousands of curious builders. Ask questions, share results, and troubleshoot with people who've done it.</p><a class="link" href="learn.html#community">Join the community →</a></div></div>
+      <div class="learn-card"><div class="ic">⌖</div><div><h3>Find a community lab</h3><p>No lab of your own? Locate a community biolab near you to use real equipment and meet other builders &mdash; straight from the biotech skill tree.</p><a class="link" href="https://biotech-skill-tree.netlify.app/labs.html" target="_blank" rel="noopener">Find a lab ↗</a></div></div>
+      <div class="learn-card"><div class="ic">🧮</div><div><h3>Estimate your setup cost</h3><p>Planning a bench? The interactive lab cost calculator maps what a beginner-to-advanced setup really costs, so you can budget before you buy.</p><a class="link" href="https://biotech-skill-tree.netlify.app/costs.html" target="_blank" rel="noopener">Open the cost calculator ↗</a></div></div>
     </div>
   </section>
 
@@ -357,7 +360,7 @@
     <div class="wrap">
       <div class="foot-grid">
         <div class="foot-brand"><a href="#top" class="logo"><span class="mark">🧫</span> Cell<b>sius</b></a><p>Living systems for everyone. Open source biology, open source future.</p></div>
-        <div class="foot-col"><h4>Explore</h4><a href="#skilltree">Skill tree</a><a href="#shop">Shop</a><a href="#store">Our kits</a><a href="learn.html">Learn &amp; protocols</a></div>
+        <div class="foot-col"><h4>Explore</h4><a href="https://biotech-skill-tree.netlify.app/" target="_blank" rel="noopener">Skill tree ↗</a><a href="https://biotech-skill-tree.netlify.app/labs.html" target="_blank" rel="noopener">Find a lab ↗</a><a href="https://biotech-skill-tree.netlify.app/costs.html" target="_blank" rel="noopener">Cost calculator ↗</a><a href="#shop">Shop</a><a href="#store">Our kits</a><a href="learn.html">Learn &amp; protocols</a></div>
         <div class="foot-col"><h4>Company</h4><a href="about.html">About &amp; mission</a><a href="about.html#affiliate">Affiliate disclosure</a><a href="#safety">Safety &amp; ethics</a><a href="#" onclick="soon(event)">Contact</a></div>
         <div class="foot-col"><h4>Legal</h4><a href="#" onclick="soon(event)">Terms</a><a href="#" onclick="soon(event)">Privacy</a><a href="#faq">FAQ</a></div>
       </div>
@@ -373,6 +376,8 @@
   <script>
     /* ═══ CONFIG — edit these to go live ═══ */
     const CONFIG = {
+      // Base URL of the interactive biotech skill tree; skill nodes deep-link to /#<tree-id>
+      skillTreeUrl: 'https://biotech-skill-tree.netlify.app/',
       // Amazon Associates tag appended to Amazon links (get one at affiliate-program.amazon.com)
       amazonTag: 'cellsius-20',
       // Optional referral/UTM appended to The ODIN links, e.g. 'ref=cellsius' (leave '' if none)
@@ -451,19 +456,19 @@
     /* ═══ SKILL TREE ═══ */
     const TIERS = [
       { t:'Tier I', name:'Foundations', blurb:'Get comfortable working with living cells and sterile technique.', skills:[
-        { n:'Sterile technique', d:'Work clean, avoid contamination', prod:'k-microbe' },
-        { n:'Culturing microbes', d:'Grow bacteria on plates & broth', prod:'k-microbe' },
-        { n:'Using a microscope', d:'See the invisible world', prod:'e-microscope' },
+        { n:'Sterile technique', d:'Work clean, avoid contamination', prod:'k-microbe', tree:'sterile-technique' },
+        { n:'Culturing microbes', d:'Grow bacteria on plates & broth', prod:'k-microbe', tree:'culturing-conditions' },
+        { n:'Using a microscope', d:'See the invisible world', prod:'e-microscope', tree:'' },
       ]},
       { t:'Tier II', name:'Genetic Engineering', blurb:'Move DNA between organisms and make cells do new things.', skills:[
-        { n:'Bacterial transformation', d:'Get new DNA into a cell', prod:'k-genlab' },
-        { n:'Fluorescent proteins', d:'Make life glow', prod:'k-yeast' },
-        { n:'Working with plasmids', d:'The vehicles of new genes', prod:'s-cells' },
+        { n:'Bacterial transformation', d:'Get new DNA into a cell', prod:'k-genlab', tree:'plasmid-insertion' },
+        { n:'Fluorescent proteins', d:'Make life glow', prod:'k-yeast', tree:'protein-induction' },
+        { n:'Working with plasmids', d:'The vehicles of new genes', prod:'s-cells', tree:'plasmids101' },
       ]},
       { t:'Tier III', name:'Gene Editing & Beyond', blurb:'Edit genomes and analyse your results like a pro.', skills:[
-        { n:'CRISPR gene editing', d:'Rewrite a gene, precisely', prod:'k-crispr' },
-        { n:'PCR & gel analysis', d:'Copy and read DNA', prod:'e-gel' },
-        { n:'Plant engineering', d:'Beyond bacteria', prod:'k-plant' },
+        { n:'CRISPR gene editing', d:'Rewrite a gene, precisely', prod:'k-crispr', tree:'crispr' },
+        { n:'PCR & gel analysis', d:'Copy and read DNA', prod:'e-gel', tree:'pcr' },
+        { n:'Plant engineering', d:'Beyond bacteria', prod:'k-plant', tree:'' },
       ]},
     ];
 
@@ -547,10 +552,12 @@
           <span class="tier-tag">${tier.t}</span>
           <h3>${tier.name}</h3>
           <p class="tier-blurb">${tier.blurb}</p>
-          ${tier.skills.map((s,i) => { const p = byId(s.prod); return `
-            <a class="node" href="${buyHref(p)}" target="_blank" rel="sponsored noopener" title="Learn via ${p.name}" onclick="track('${p.id}')">
+          ${tier.skills.map((s,i) => {
+            const href = CONFIG.skillTreeUrl + (s.tree ? '#' + s.tree : '');
+            return `
+            <a class="node" href="${href}" target="_blank" rel="noopener" title="Open &ldquo;${s.n}&rdquo; in the interactive skill tree" onclick="track('${s.tree||'tree'}')">
               <span class="dot">${i+1}</span>
-              <span class="n-body"><b>${s.n}</b><span>${s.d} &middot; ${p.name}</span></span>
+              <span class="n-body"><b>${s.n}</b><span>${s.d}</span></span>
               <span class="arrow">↗</span>
             </a>`; }).join('')}
         </div>`).join('');
