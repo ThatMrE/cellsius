@@ -1,8 +1,8 @@
 # Cellsius — going live
 
-The site is a static storefront with one Netlify serverless function for
-Stripe. Nothing here needs a build step beyond Netlify installing the
-`stripe` dependency for the function.
+A static storefront with one Netlify serverless function for Stripe. Nothing
+here needs a build step, apart from Netlify installing the `stripe` dependency
+for the function.
 
 ## 1. Affiliate links
 
@@ -19,15 +19,15 @@ const CONFIG = {
 
 - **Amazon:** sign up at affiliate-program.amazon.com, put your tag in `amazonTag`.
   Every Amazon product link is built as a search URL with your tag attached.
-- **The ODIN / other makers:** apply to their affiliate/referral programme and
-  put any tracking param in `odinRef`. Verify each ODIN product URL in the
-  `PRODUCTS` array — a few point to the ODIN shop root where the exact product
-  slug wasn't confirmed.
+- **The ODIN and other makers:** apply to their affiliate or referral program and
+  put any tracking parameter in `odinRef`. Check each ODIN product URL in the
+  `PRODUCTS` array. A few point at the ODIN shop root, because nobody confirmed
+  the exact product slug.
 
 ## 2. Product photos (replace the SVG illustrations)
 
-Each product in the `PRODUCTS` / `DIRECT` arrays can carry an `image` field.
-If present, it's used instead of the built-in SVG:
+Each product in the `PRODUCTS` and `DIRECT` arrays can carry an `image` field.
+The card then shows that file instead of the built-in SVG:
 
 ```js
 { id:'k-crispr', /* … */ image:'assets/products/crispr-kit.jpg' },
@@ -40,9 +40,10 @@ If present, it's used instead of the built-in SVG:
 
 ## 3. Stripe payments (for "Our Kits")
 
-Card payments are handled by `netlify/functions/create-checkout.js`, which
-creates a Stripe Checkout Session. Product prices live **server-side** in that
-file (never trust the browser) — keep them in sync with the `DIRECT` array.
+`netlify/functions/create-checkout.js` handles card payments. It creates a
+Stripe Checkout Session. Product prices live **server-side** in that file,
+because the browser is not a source you can trust. Keep them in step with the
+`DIRECT` array.
 
 **To go live:**
 
@@ -60,11 +61,11 @@ file (never trust the browser) — keep them in sync with the `DIRECT` array.
 3. Demo mode: opens a pre-filled email order.
 
 After a successful payment, Stripe returns the buyer to `/?paid=1` and the site
-shows a thank-you toast. To fulfil orders reliably, add a Stripe webhook
-(`checkout.session.completed`) — see stripe.com/docs/payments/checkout/fulfill-orders.
+shows a thank-you toast. To fulfill orders reliably, add a Stripe webhook on
+`checkout.session.completed`. See stripe.com/docs/payments/checkout/fulfill-orders.
 
 ## 4. Deploy
 
-Point Netlify at this repo (publish directory `.`). Netlify auto-detects
-`netlify/functions` and installs `stripe`. The `cellsi.us` domain redirects
-here via the companion `cellsius-us` repo.
+Point Netlify at this repo, with `.` as the publish directory. Netlify finds
+`netlify/functions` on its own and installs `stripe`. The companion
+`cellsius-us` repo redirects the `cellsi.us` domain here.
